@@ -53,6 +53,7 @@ const Berekening = (props: PropsBerekening) => {
   const [tellerAlsDieOphoogtDanResetten, setTellerAlsDieOphoogtDanResetten] =
     useState(0);
 
+  //uitrekenen wat het goede antwoord is zodat je daarna kan checken of dat goed is ingevuld
   useEffect(() => {
     switch (props.operator) {
       case TypeOperator.VERMENIGVULDIGING:
@@ -85,8 +86,9 @@ const Berekening = (props: PropsBerekening) => {
             MeeteenheidVolgordeArray.indexOf(props.meeteenheidVanaf);
           const vermenigvuldigeenheid = Math.pow(10, positieverschil);
           setBerekendeAntwoord(
-            (vermenigvuldigeenheid * (props.getalVoorOmrekenen * 100)) / 100
-          ); //als je altijd werkt met 2 decimalen dan kan je vermenigvuldigen met 100 om gehele getallen te krijgen en daarna delen door 100 om weer terug te rekenen dan houd je decimalen en wordt niet rare ,000003 etc. getallen door javascript
+            (vermenigvuldigeenheid * (props.getalVoorOmrekenen * 10000000)) /
+              10000000
+          ); //vermenigvuldigen met hoog getal en dan delen door hoog getal om gehele getallen te krijgen en daarna delen door 100 om weer terug te rekenen dan houd je decimalen en wordt niet rare ,000003 etc. getallen door javascript
         }
         break;
     }
@@ -198,9 +200,11 @@ const Berekening = (props: PropsBerekening) => {
         ></StyledInputAntwoord>
 
         <br></br>
-        <button type="button" onClick={() => toggleWeergaveHandler()}>
-          Toon {toonSomOnderElkaar ? "naast elkaar" : "onder elkaar"}
-        </button>
+        {props.operator !== TypeOperator.MEETEENHEDEN_OMREKENEN && (
+          <button type="button" onClick={() => toggleWeergaveHandler()}>
+            Toon {toonSomOnderElkaar ? "naast elkaar" : "onder elkaar"}
+          </button>
+        )}
         {toonCheckKnop && (
           <button
             type="submit"
@@ -223,7 +227,6 @@ const Berekening = (props: PropsBerekening) => {
         )}
       </div>
       <br />
-      <div>Het antwoord is: </div>
       {toonNextKnop && antwoordIsGoed && (
         <Fragment>
           <StyledDivAlsGoedAntwoord>

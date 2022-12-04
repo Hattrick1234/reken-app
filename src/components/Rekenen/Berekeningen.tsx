@@ -6,7 +6,6 @@ import {
   TypeOperator,
   TypePlaatje,
   TypeTelParameter,
-  TypeMeeteenheid,
   MeeteenheidVolgordeArray,
 } from "../HergebruikElementen/Types_Constanten_etc";
 import Plaatje from "../Layout/Plaatje";
@@ -62,9 +61,25 @@ const Berekeningen = (props: PropsBerekeningen) => {
     waardenOmMeeTeRekenen[
       Math.floor(Math.random() * waardenOmMeeTeRekenen.length)
     ];
+  //getalVoorOmrekenen nu 2 getallen voor . en 2 getallen na de punt/komma
+  const getalVoorOmrekenen = parseFloat(
+    Math.floor(Math.random() * 100).toString() +
+      "." +
+      Math.floor(Math.random() * 100).toString()
+  );
   const randomMeetEenheidVanaf =
     MeeteenheidVolgordeArray[
       Math.floor(Math.random() * MeeteenheidVolgordeArray.length)
+    ];
+  const eenhedenZonderEenheidVanaf = MeeteenheidVolgordeArray.filter(
+    (element) => {
+      return element !== randomMeetEenheidVanaf;
+    }
+  );
+  //een random getal uit gefilterde array zonder de eenheid vanaf, anders krijg je zelfde vanaf en naartoe
+  const randomMeetEenheidNaartoe =
+    eenhedenZonderEenheidVanaf[
+      Math.floor(Math.random() * eenhedenZonderEenheidVanaf.length)
     ];
 
   const volgendeVraagHandler = (vraagWasGoed: boolean) => {
@@ -200,9 +215,9 @@ const Berekeningen = (props: PropsBerekeningen) => {
           )}
           hoogstePlusMinGetal={hoogstePlusMinGetal}
           laagstePlusMinGetal={laagstePlusMinGetal}
-          getalVoorOmrekenen={3.14}
+          getalVoorOmrekenen={getalVoorOmrekenen}
           meeteenheidVanaf={randomMeetEenheidVanaf}
-          meeteenheidNaartoe={TypeMeeteenheid.CM}
+          meeteenheidNaartoe={randomMeetEenheidNaartoe}
           operator={props.operator}
           onNaarVolgendeVraag={volgendeVraagHandler}
         ></Berekening>
