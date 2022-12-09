@@ -10,6 +10,7 @@ import {
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { uiActions } from "../../store/ui-slice";
 import RekensomVerticaalWeergave from "../Layout/RekensomVerticaalWeergave";
+import verplaatsKommaInGetal from "./RekenHulpFuncties";
 
 type PropsBerekening = {
   getalUitGekozenTafels: number;
@@ -84,11 +85,10 @@ const Berekening = (props: PropsBerekening) => {
           const positieverschil =
             MeeteenheidVolgordeArray.indexOf(props.meeteenheidNaartoe) -
             MeeteenheidVolgordeArray.indexOf(props.meeteenheidVanaf);
-          const vermenigvuldigeenheid = Math.pow(10, positieverschil);
+
           setBerekendeAntwoord(
-            (vermenigvuldigeenheid * (props.getalVoorOmrekenen * 10000000)) /
-              10000000
-          ); //vermenigvuldigen met hoog getal en dan delen door hoog getal om gehele getallen te krijgen en daarna delen door 100 om weer terug te rekenen dan houd je decimalen en wordt niet rare ,000003 etc. getallen door javascript
+            verplaatsKommaInGetal(props.getalVoorOmrekenen, positieverschil)
+          );
         }
         break;
     }
