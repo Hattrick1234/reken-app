@@ -143,7 +143,9 @@ const Berekening = (props: PropsBerekening) => {
         rekensomInTekst = `${props.hoogstePlusMinGetal} - ${props.laagstePlusMinGetal} =`;
         break;
       case TypeOperator.MEETEENHEDEN_OMREKENEN:
-        rekensomInTekst = `${props.getalVoorOmrekenen} ${props.meeteenheidVanaf} is in ${props.meeteenheidNaartoe}`;
+        rekensomInTekst = `${props.getalVoorOmrekenen.toLocaleString()} ${
+          props.meeteenheidVanaf
+        } is in ${props.meeteenheidNaartoe}`;
         break;
     }
     return rekensomInTekst;

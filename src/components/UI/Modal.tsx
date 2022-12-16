@@ -41,15 +41,18 @@ const StyledModalOverlay = styled.div`
   z-index: 30;
   animation: ${slideDown} 300ms ease-out forwards;
 
+  max-height: 75vh;
+  overflow-y: auto; //toont scrollbar indien overflowt
+
+  max-width: 70vw;
+  overflow-x: auto; //toont scrollbar indien overflowt
+
   @media (min-width: 768px) {
-    .modal {
-      width: 40rem;
-      left: calc(50% - 20rem);
-    }
+    width: 40rem;
+    left: calc(50% - 20rem);
   }
 `;
 
-//const ModalOverlay: React.FC<{ children?: JSX.Element }> = (props) => {
 const ModalOverlay = (props: { children?: JSX.Element }) => {
   return (
     <StyledModalOverlay>

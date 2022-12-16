@@ -9,6 +9,8 @@ import {
 } from "../HergebruikElementen/Types_Constanten_etc";
 import EindconditieKeuze from "../Layout/EindconditieKeuze";
 import TijdconditieKeuze from "../Layout/TijdconditieKeuze";
+import { useAppDispatch } from "../../store/hooks";
+import { uiActions } from "../../store/ui-slice";
 
 const StyledContainerMetOpties = styled.div`
   display: flex;
@@ -66,6 +68,7 @@ const KeuzePagina = (props: PropsKeuzePagina) => {
     "15",
     "25",
   ];
+  const dispatch = useAppDispatch();
 
   const checkboxItemsTafels = () => {
     return (
@@ -224,6 +227,7 @@ const KeuzePagina = (props: PropsKeuzePagina) => {
   };
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    //const onSubmitHandler = () => {
     event.preventDefault();
 
     props.passData(
@@ -250,14 +254,17 @@ const KeuzePagina = (props: PropsKeuzePagina) => {
       setKeuzePaginaVolledigIngevuld(
         Object.values(TypeTelParameter).includes(telParameter)
       );
-    } else {
+    } else if (operator === TypeOperator.MEETEENHEDEN_OMREKENEN) {
+      //Bij meeteenheden moet je niet de onder elkaar optie tonen, ook niet als die daar al op stond van een vorige andere operator
+      dispatch(uiActions.zetWeergaveOnderElkaar(false));
       setKeuzePaginaVolledigIngevuld(true);
     }
-  }, [operator, gekozenTafels, telParameter]);
+  }, [operator, gekozenTafels, telParameter, dispatch]);
 
   return (
     <Modal onClose={props.onClose}>
       <form onSubmit={onSubmitHandler}>
+        {/* <form> */}
         <StyledContainerMetOpties>
           <StyledKolomMetOpties>
             {keuzeOperatorSchermItems()}
@@ -285,7 +292,11 @@ const KeuzePagina = (props: PropsKeuzePagina) => {
           )}
         </StyledContainerMetOpties>
         <button onClick={props.onClose}>Sluiten</button>
-        <button disabled={!keuzePaginaVolledigIngevuld} type="submit">
+        <button
+          disabled={!keuzePaginaVolledigIngevuld}
+          //onClick={onSubmitHandler}
+          type="submit"
+        >
           Ok
         </button>
       </form>

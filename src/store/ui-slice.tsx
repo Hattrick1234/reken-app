@@ -17,10 +17,14 @@ const uiSlice = createSlice({
     wisselWeergaveOnderOfNaastElkaar(state) {
       state.toonSomOnderElkaar = !state.toonSomOnderElkaar;
     },
+    zetWeergaveOnderElkaar(state, action) {
+      state.toonSomOnderElkaar = action.payload;
+    },
   },
 });
 
 export const uiActions = uiSlice.actions;
-export const { wisselWeergaveOnderOfNaastElkaar } = uiSlice.actions;
+export const { wisselWeergaveOnderOfNaastElkaar, zetWeergaveOnderElkaar } =
+  uiSlice.actions;
 
 export default uiSlice;

@@ -79,7 +79,9 @@ const RekensomVerticaalWeergave = (props: PropsRekensomVerticaalWeergave) => {
     case TypeOperator.MEETEENHEDEN_OMREKENEN:
       bovensteGetal = "0";
       ondersteGetal = `0`;
-      operator = `${props.getalVoorOmrekenen} ${props.meeteenheidVanaf} is in ${props.meeteenheidNaartoe}`;
+      operator = `${props.getalVoorOmrekenen.toLocaleString()} ${
+        props.meeteenheidVanaf
+      } is in ${props.meeteenheidNaartoe}`;
       aantalKaraktersGrootsteGetal = 0;
       break;
   }
