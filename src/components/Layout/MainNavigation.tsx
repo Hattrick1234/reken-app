@@ -3,9 +3,8 @@ import styled from "styled-components";
 const StyledHeader = styled.header`
   top: 0;
   left: 0;
-  background: #2ddf5c;
-
-  & h1 {
+  background: orchid // #2ddf5c;
+    & h1 {
     margin: 0;
     text-align: center;
   }
