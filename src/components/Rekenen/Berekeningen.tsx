@@ -97,8 +97,8 @@ const Berekeningen = (props: PropsBerekeningen) => {
     //de states of props in de dependencies wijzigen
   };
 
-  //Hoogste en laagste plus/min getal afleiden
-  const berekenPlusMinWaarde = () => {
+  //Hoogste en laagste plus/min/keer getal afleiden
+  const berekenPlusMinKeerWaarde = () => {
     switch (props.telParameter) {
       case TypeTelParameter.EENHEDEN:
         return Math.floor(Math.random() * 10);
@@ -113,16 +113,20 @@ const Berekeningen = (props: PropsBerekeningen) => {
     }
   };
 
-  const plusMinGetal1 = berekenPlusMinWaarde();
-  const plusMinGetal2 = berekenPlusMinWaarde();
-  let hoogstePlusMinGetal = 0;
-  let laagstePlusMinGetal = 0;
-  if (plusMinGetal1 > plusMinGetal2) {
-    hoogstePlusMinGetal = plusMinGetal1;
-    laagstePlusMinGetal = plusMinGetal2;
+  const plusMinKeerGetal1 = berekenPlusMinKeerWaarde();
+  let plusMinKeerGetal2 = berekenPlusMinKeerWaarde();
+  let hoogstePlusMinKeerGetal = 0;
+  let laagstePlusMinKeerGetal = 0;
+  //indien vermenigvuldigen dan vooralsnog enkelen * gekozen TypeTelParameter, daarom 2e getal naar enkel omzetten
+  if (props.operator === TypeOperator.VERMENIGVULDIGEN) {
+    plusMinKeerGetal2 = Math.floor(Math.random() * 10);
+  }
+  if (plusMinKeerGetal1 > plusMinKeerGetal2) {
+    hoogstePlusMinKeerGetal = plusMinKeerGetal1;
+    laagstePlusMinKeerGetal = plusMinKeerGetal2;
   } else {
-    hoogstePlusMinGetal = plusMinGetal2;
-    laagstePlusMinGetal = plusMinGetal1;
+    hoogstePlusMinKeerGetal = plusMinKeerGetal2;
+    laagstePlusMinKeerGetal = plusMinKeerGetal1;
   }
 
   const alsTimerIsAfgelopen = () => {
@@ -213,8 +217,8 @@ const Berekeningen = (props: PropsBerekeningen) => {
           getalOmMeeTeDelenOfVermenigvuldigen={parseInt(
             randomGetalOmMeeTeRekenen
           )}
-          hoogstePlusMinGetal={hoogstePlusMinGetal}
-          laagstePlusMinGetal={laagstePlusMinGetal}
+          hoogstePlusMinKeerGetal={hoogstePlusMinKeerGetal}
+          laagstePlusMinKeerGetal={laagstePlusMinKeerGetal}
           getalVoorOmrekenen={getalVoorOmrekenen}
           meeteenheidVanaf={randomMeetEenheidVanaf}
           meeteenheidNaartoe={randomMeetEenheidNaartoe}

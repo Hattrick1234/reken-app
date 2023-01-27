@@ -31,8 +31,8 @@ const StyledDivGetalMetMargeLinksEnRechts = styled.div`
 type PropsRekensomVerticaalWeergave = {
   getalUitGekozenTafels: number;
   getalOmMeeTeDelenOfVermenigvuldigen: number;
-  hoogstePlusMinGetal: number;
-  laagstePlusMinGetal: number;
+  hoogstePlusMinKeerGetal: number;
+  laagstePlusMinKeerGetal: number;
   getalVoorOmrekenen: number;
   meeteenheidVanaf: TypeMeeteenheid;
   meeteenheidNaartoe: TypeMeeteenheid;
@@ -46,12 +46,19 @@ const RekensomVerticaalWeergave = (props: PropsRekensomVerticaalWeergave) => {
   let operator = "";
   let aantalKaraktersGrootsteGetal = 0;
   switch (props.operator) {
-    case TypeOperator.VERMENIGVULDIGING:
+    case TypeOperator.TAFELS:
       bovensteGetal = `${props.getalOmMeeTeDelenOfVermenigvuldigen}`;
       ondersteGetal = `${props.getalUitGekozenTafels}`;
       operator = "_______x";
       aantalKaraktersGrootsteGetal =
         props.getalUitGekozenTafels.toString().length;
+      break;
+    case TypeOperator.VERMENIGVULDIGEN:
+      bovensteGetal = `${props.hoogstePlusMinKeerGetal}`;
+      ondersteGetal = `${props.laagstePlusMinKeerGetal}`;
+      operator = "_______x";
+      aantalKaraktersGrootsteGetal =
+        props.hoogstePlusMinKeerGetal.toString().length;
       break;
     case TypeOperator.DELEN:
       bovensteGetal = `${
@@ -63,18 +70,18 @@ const RekensomVerticaalWeergave = (props: PropsRekensomVerticaalWeergave) => {
         props.getalUitGekozenTafels.toString().length;
       break;
     case TypeOperator.OPTELLEN:
-      bovensteGetal = `${props.hoogstePlusMinGetal}`;
-      ondersteGetal = `${props.laagstePlusMinGetal}`;
+      bovensteGetal = `${props.hoogstePlusMinKeerGetal}`;
+      ondersteGetal = `${props.laagstePlusMinKeerGetal}`;
       operator = "_______+";
       aantalKaraktersGrootsteGetal =
-        props.hoogstePlusMinGetal.toString().length;
+        props.hoogstePlusMinKeerGetal.toString().length;
       break;
     case TypeOperator.AFTREKKEN:
-      bovensteGetal = `${props.hoogstePlusMinGetal}`;
-      ondersteGetal = `${props.laagstePlusMinGetal}`;
+      bovensteGetal = `${props.hoogstePlusMinKeerGetal}`;
+      ondersteGetal = `${props.laagstePlusMinKeerGetal}`;
       operator = "_______-";
       aantalKaraktersGrootsteGetal =
-        props.hoogstePlusMinGetal.toString().length;
+        props.hoogstePlusMinKeerGetal.toString().length;
       break;
     case TypeOperator.MEETEENHEDEN_OMREKENEN:
       bovensteGetal = "0";

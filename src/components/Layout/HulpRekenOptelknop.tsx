@@ -20,9 +20,9 @@ const HulpRekenOptelKnop = (props: PropsHulpRekenOptelKnop) => {
   }, [props.tellerAlsDieOphoogtDanResetten]);
 
   const onClickHandler = () => {
-    console.log("ingedrukt");
+    // console.log("ingedrukt");
     setWaarde((vorige_waarde) => {
-      return vorige_waarde === 0 ? 1 : 0;
+      return vorige_waarde === 9 ? 0 : vorige_waarde + 1;
     });
   };
 

@@ -152,11 +152,20 @@ const KeuzePagina = (props: PropsKeuzePagina) => {
         <div>
           <input
             type="radio"
-            value={TypeOperator.VERMENIGVULDIGING}
-            checked={operator === TypeOperator.VERMENIGVULDIGING}
+            value={TypeOperator.TAFELS}
+            checked={operator === TypeOperator.TAFELS}
             onChange={handleOperatorChange}
           />
-          {TypeOperator.VERMENIGVULDIGING}
+          {TypeOperator.TAFELS}
+        </div>
+        <div>
+          <input
+            type="radio"
+            value={TypeOperator.VERMENIGVULDIGEN}
+            checked={operator === TypeOperator.VERMENIGVULDIGEN}
+            onChange={handleOperatorChange}
+          />
+          {TypeOperator.VERMENIGVULDIGEN}
         </div>
         <div>
           <input
@@ -242,14 +251,12 @@ const KeuzePagina = (props: PropsKeuzePagina) => {
   };
 
   useEffect(() => {
-    if (
-      operator === TypeOperator.DELEN ||
-      operator === TypeOperator.VERMENIGVULDIGING
-    ) {
+    if (operator === TypeOperator.DELEN || operator === TypeOperator.TAFELS) {
       setKeuzePaginaVolledigIngevuld(gekozenTafels.selections.length >= 1);
     } else if (
       operator === TypeOperator.OPTELLEN ||
-      operator === TypeOperator.AFTREKKEN
+      operator === TypeOperator.AFTREKKEN ||
+      operator === TypeOperator.VERMENIGVULDIGEN
     ) {
       setKeuzePaginaVolledigIngevuld(
         Object.values(TypeTelParameter).includes(telParameter)
@@ -276,7 +283,7 @@ const KeuzePagina = (props: PropsKeuzePagina) => {
             />
             <TijdconditieKeuze />
           </StyledKolomMetOpties>
-          {(operator === TypeOperator.VERMENIGVULDIGING ||
+          {(operator === TypeOperator.TAFELS ||
             operator === TypeOperator.DELEN) && (
             <StyledKolomMetOpties>
               <h3>Kies de tafels</h3>
@@ -284,19 +291,16 @@ const KeuzePagina = (props: PropsKeuzePagina) => {
             </StyledKolomMetOpties>
           )}
           {(operator === TypeOperator.AFTREKKEN ||
-            operator === TypeOperator.OPTELLEN) && (
+            operator === TypeOperator.OPTELLEN ||
+            operator === TypeOperator.VERMENIGVULDIGEN) && (
             <StyledKolomMetOpties>
-              <h3>Optellen/Aftrekken met</h3>
+              <h3>{operator} met</h3>
               {keuzesBijOptellenEnAftrekken()}
             </StyledKolomMetOpties>
           )}
         </StyledContainerMetOpties>
         <button onClick={props.onClose}>Sluiten</button>
-        <button
-          disabled={!keuzePaginaVolledigIngevuld}
-          //onClick={onSubmitHandler}
-          type="submit"
-        >
+        <button disabled={!keuzePaginaVolledigIngevuld} type="submit">
           Ok
         </button>
       </form>

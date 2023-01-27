@@ -14,9 +14,10 @@ export enum TypeEindconditie {
 export enum TypeOperator {
   AFTREKKEN = "Aftrekken",
   DELEN = "Delen",
-  OPTELLEN = "Optellen",
-  VERMENIGVULDIGING = "Vermenigvuldigen",
   MEETEENHEDEN_OMREKENEN = "Omrekenen meeteenheden",
+  OPTELLEN = "Optellen",
+  TAFELS = "Tafels",
+  VERMENIGVULDIGEN = "Vermenigvuldigen",
 }
 
 export enum TypeTelParameter {

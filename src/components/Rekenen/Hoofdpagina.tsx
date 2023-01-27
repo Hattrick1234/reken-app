@@ -18,9 +18,7 @@ const HoofdPagina = () => {
     TypeEindconditie.ONBEPERKT
   );
   const [eindconditieParameter, setEindconditieParameter] = React.useState(10);
-  const [operator, setOperator] = React.useState(
-    TypeOperator.VERMENIGVULDIGING
-  );
+  const [operator, setOperator] = React.useState(TypeOperator.TAFELS);
   const [telParameter, setTelParameter] = React.useState(
     TypeTelParameter.TIENTALLEN
   );
@@ -80,7 +78,7 @@ const HoofdPagina = () => {
         />
       )}
       {operator === TypeOperator.DELEN ||
-        (operator === TypeOperator.VERMENIGVULDIGING && (
+        (operator === TypeOperator.TAFELS && (
           <p>Gekozen tafels: {gekozenTafels.toString()}</p>
         ))}
       <hr></hr>

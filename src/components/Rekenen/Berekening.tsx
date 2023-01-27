@@ -15,8 +15,8 @@ import verplaatsKommaInGetal from "./RekenHulpFuncties";
 type PropsBerekening = {
   getalUitGekozenTafels: number;
   getalOmMeeTeDelenOfVermenigvuldigen: number;
-  hoogstePlusMinGetal: number;
-  laagstePlusMinGetal: number;
+  hoogstePlusMinKeerGetal: number;
+  laagstePlusMinKeerGetal: number;
   getalVoorOmrekenen: number;
   meeteenheidVanaf: TypeMeeteenheid;
   meeteenheidNaartoe: TypeMeeteenheid;
@@ -57,10 +57,15 @@ const Berekening = (props: PropsBerekening) => {
   //uitrekenen wat het goede antwoord is zodat je daarna kan checken of dat goed is ingevuld
   useEffect(() => {
     switch (props.operator) {
-      case TypeOperator.VERMENIGVULDIGING:
+      case TypeOperator.TAFELS:
         setBerekendeAntwoord(
           props.getalOmMeeTeDelenOfVermenigvuldigen *
             props.getalUitGekozenTafels
+        );
+        break;
+      case TypeOperator.VERMENIGVULDIGEN:
+        setBerekendeAntwoord(
+          props.hoogstePlusMinKeerGetal * props.laagstePlusMinKeerGetal
         );
         break;
       case TypeOperator.DELEN:
@@ -72,12 +77,12 @@ const Berekening = (props: PropsBerekening) => {
         break;
       case TypeOperator.OPTELLEN:
         setBerekendeAntwoord(
-          props.hoogstePlusMinGetal + props.laagstePlusMinGetal
+          props.hoogstePlusMinKeerGetal + props.laagstePlusMinKeerGetal
         );
         break;
       case TypeOperator.AFTREKKEN:
         setBerekendeAntwoord(
-          props.hoogstePlusMinGetal - props.laagstePlusMinGetal
+          props.hoogstePlusMinKeerGetal - props.laagstePlusMinKeerGetal
         );
         break;
       case TypeOperator.MEETEENHEDEN_OMREKENEN:
@@ -96,8 +101,8 @@ const Berekening = (props: PropsBerekening) => {
     props.getalOmMeeTeDelenOfVermenigvuldigen,
     props.getalUitGekozenTafels,
     props.operator,
-    props.hoogstePlusMinGetal,
-    props.laagstePlusMinGetal,
+    props.hoogstePlusMinKeerGetal,
+    props.laagstePlusMinKeerGetal,
     props.getalVoorOmrekenen,
     props.meeteenheidVanaf,
     props.meeteenheidNaartoe,
@@ -127,8 +132,11 @@ const Berekening = (props: PropsBerekening) => {
   const rekenSomInTekstVormHorizontaal = () => {
     let rekensomInTekst = "";
     switch (props.operator) {
-      case TypeOperator.VERMENIGVULDIGING:
+      case TypeOperator.TAFELS:
         rekensomInTekst = `${props.getalOmMeeTeDelenOfVermenigvuldigen} x ${props.getalUitGekozenTafels} =`;
+        break;
+      case TypeOperator.VERMENIGVULDIGEN:
+        rekensomInTekst = `${props.laagstePlusMinKeerGetal} x ${props.hoogstePlusMinKeerGetal} =`;
         break;
       case TypeOperator.DELEN:
         rekensomInTekst = `${
@@ -137,10 +145,10 @@ const Berekening = (props: PropsBerekening) => {
         } : ${props.getalUitGekozenTafels} =`;
         break;
       case TypeOperator.OPTELLEN:
-        rekensomInTekst = `${props.hoogstePlusMinGetal} + ${props.laagstePlusMinGetal} =`;
+        rekensomInTekst = `${props.hoogstePlusMinKeerGetal} + ${props.laagstePlusMinKeerGetal} =`;
         break;
       case TypeOperator.AFTREKKEN:
-        rekensomInTekst = `${props.hoogstePlusMinGetal} - ${props.laagstePlusMinGetal} =`;
+        rekensomInTekst = `${props.hoogstePlusMinKeerGetal} - ${props.laagstePlusMinKeerGetal} =`;
         break;
       case TypeOperator.MEETEENHEDEN_OMREKENEN:
         rekensomInTekst = `${props.getalVoorOmrekenen.toLocaleString()} ${
@@ -182,8 +190,8 @@ const Berekening = (props: PropsBerekening) => {
             getalOmMeeTeDelenOfVermenigvuldigen={
               props.getalOmMeeTeDelenOfVermenigvuldigen
             }
-            hoogstePlusMinGetal={props.hoogstePlusMinGetal}
-            laagstePlusMinGetal={props.laagstePlusMinGetal}
+            hoogstePlusMinKeerGetal={props.hoogstePlusMinKeerGetal}
+            laagstePlusMinKeerGetal={props.laagstePlusMinKeerGetal}
             getalVoorOmrekenen={props.getalVoorOmrekenen}
             meeteenheidVanaf={props.meeteenheidVanaf}
             meeteenheidNaartoe={props.meeteenheidNaartoe}
@@ -199,6 +207,7 @@ const Berekening = (props: PropsBerekening) => {
           readOnly={toonNextKnop}
           ref={antwoordInputRef}
           onKeyDown={handleKeyDown}
+          dir="rtl"
         ></StyledInputAntwoord>
 
         <br></br>
