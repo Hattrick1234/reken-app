@@ -34,12 +34,14 @@ const StyledDivAlsFoutAntwoord = styled.div`
 
 const StyledInputAntwoord = styled.input`
   width: 5rem;
+  text-align: right;
 `;
 
 const Berekening = (props: PropsBerekening) => {
   const [antwoordIsGoed, setantwoordIsGoed] = useState(false);
   const [toonCheckKnop, setToonCheckKnop] = useState(true);
   const [toonNextKnop, setToonNextKnop] = useState(false);
+  const [invoerRechtsNaarLinks, setInvoerRechtsNaarLinks] = useState(false);
   const [berekendeAntwoord, setBerekendeAntwoord] = useState(0);
   const antwoordInputRef =
     React.useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -129,6 +131,10 @@ const Berekening = (props: PropsBerekening) => {
     }
   };
 
+  const toggleTekstInvoerRichtingHandler = () => {
+    setInvoerRechtsNaarLinks((invoerRechtsNaarLinks) => !invoerRechtsNaarLinks);
+  };
+
   const rekenSomInTekstVormHorizontaal = () => {
     let rekensomInTekst = "";
     switch (props.operator) {
@@ -177,6 +183,9 @@ const Berekening = (props: PropsBerekening) => {
     //it triggers by pressing the enter key
     if (event.key === "Enter") {
       answerInputHandler();
+    } else if (invoerRechtsNaarLinks) {
+      antwoordInputRef.current.setSelectionRange(0, 0);
+      antwoordInputRef.current.focus();
     }
   };
 
@@ -203,19 +212,13 @@ const Berekening = (props: PropsBerekening) => {
         <StyledInputAntwoord
           autoFocus
           id="berekening"
-          type="number"
+          type="text"
           readOnly={toonNextKnop}
           ref={antwoordInputRef}
           onKeyDown={handleKeyDown}
-          dir="rtl"
         ></StyledInputAntwoord>
 
         <br></br>
-        {props.operator !== TypeOperator.MEETEENHEDEN_OMREKENEN && (
-          <button type="button" onClick={() => toggleWeergaveHandler()}>
-            Toon {toonSomOnderElkaar ? "naast elkaar" : "onder elkaar"}
-          </button>
-        )}
         {toonCheckKnop && (
           <button
             type="submit"
@@ -236,6 +239,26 @@ const Berekening = (props: PropsBerekening) => {
             Volgende vraag
           </button>
         )}
+        <br />
+        <br />
+        {props.operator !== TypeOperator.MEETEENHEDEN_OMREKENEN && (
+          <button
+            type="button"
+            id="bovenOfOnder"
+            onClick={() => toggleWeergaveHandler()}
+          >
+            Toon {toonSomOnderElkaar ? "naast elkaar" : "onder elkaar"}
+          </button>
+        )}
+        <button
+          type="button"
+          id="textrichting"
+          onClick={toggleTekstInvoerRichtingHandler}
+        >
+          Van{" "}
+          {invoerRechtsNaarLinks ? "links naar rechts" : " rechts naar links"}{" "}
+          schrijven
+        </button>
       </div>
       <br />
       {toonNextKnop && antwoordIsGoed && (
