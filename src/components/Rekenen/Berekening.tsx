@@ -118,12 +118,16 @@ const Berekening = (props: PropsBerekening) => {
       setToonNextKnop(false);
       setTellerAlsDieOphoogtDanResetten((huidig) => huidig + 1);
     } else if (toonCheckKnop) {
-      if (antwoordInputRef.current.value === "") {
+      const ingevuldeWaarde = antwoordInputRef.current.value.replace(",", ".");
+
+      // if (antwoordInputRef.current.value === "") {
+      if (ingevuldeWaarde === "") {
         setantwoordIsGoed(false);
         return;
       } else {
         setantwoordIsGoed(
-          parseFloat(antwoordInputRef.current.value) === berekendeAntwoord
+          //parseFloat(antwoordInputRef.current.value) === berekendeAntwoord
+          ingevuldeWaarde === berekendeAntwoord.toString()
         );
       }
       setToonCheckKnop(false);
